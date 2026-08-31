@@ -1,6 +1,5 @@
 -- ============================================================
 -- Medidas de seguridad sobre la base de datos
--- Ejecutar como root DESPUES de 01_esquema.sql y 02_datos_demo.sql
 -- ============================================================
 
 -- 1) Usuario dedicado para la aplicacion.
