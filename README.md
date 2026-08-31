@@ -5,7 +5,7 @@ Proyecto de la materia **Seguridad en Bases de Datos**.
 
 ## Qué incluye
 
-- **14 tablas relacionadas** (el requisito era mínimo 10).
+- **14 tablas relacionadas**.
 - **Autenticación por base de datos**: la tabla `usuarios` guarda el correo y la contraseña hasheada con PBKDF2-SHA256. En ningún momento se guarda la contraseña en texto plano.
 - **CRUD completo** sobre 5 módulos: socios, canchas, instructores, clases y reservas.
 - **Roles**: `administrador` (puede eliminar y ver la auditoría) y `operador` (consulta y registra).
