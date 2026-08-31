@@ -1,6 +1,5 @@
 -- ============================================================
 -- Proyecto: Club Deportivo Los Cedros
--- Materia: Seguridad en Bases de Datos
 -- Motor: MySQL 8.x
 -- ============================================================
 
