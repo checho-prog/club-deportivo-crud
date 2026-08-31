@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block titulo %}{{ accion }} reserva{% endblock %}
+{% block contenido %}
+<div class="encabezado"><div><h1>{{ accion }} reserva</h1><p>El sistema no deja cruzar dos reservas confirmadas en la misma cancha.</p></div></div>
+<form class="formulario" method="post">
+  <div class="campos">
+    <div class="campo">
+      <label for="socio_id">Socio *</label>
+      <select id="socio_id" name="socio_id" required>
+        {% for s in socios %}
+        <option value="{{ s.id }}" {{ 'selected' if reserva and reserva.socio_id|string == s.id|string }}>{{ s.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="cancha_id">Cancha *</label>
+      <select id="cancha_id" name="cancha_id" required>
+        {% for c in canchas %}
+        <option value="{{ c.id }}" {{ 'selected' if reserva and reserva.cancha_id|string == c.id|string }}>{{ c.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="fecha">Fecha *</label>
+      <input type="date" id="fecha" name="fecha" required value="{{ reserva.fecha if reserva else '' }}">
+    </div>
+    <div class="campo">
+      <label for="estado">Estado</label>
+      <select id="estado" name="estado">
+        {% for e in ['confirmada','cancelada','cumplida'] %}
+        <option value="{{ e }}" {{ 'selected' if reserva and reserva.estado == e }}>{{ e }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="hora_inicio">Hora de inicio *</label>
+      <input type="time" id="hora_inicio" name="hora_inicio" required value="{{ reserva.hora_inicio if reserva else '' }}">
+    </div>
+    <div class="campo">
+      <label for="hora_fin">Hora de fin *</label>
+      <input type="time" id="hora_fin" name="hora_fin" required value="{{ reserva.hora_fin if reserva else '' }}">
+    </div>
+    <div class="campo">
+      <label for="valor">Valor</label>
+      <input type="number" step="1000" min="0" id="valor" name="valor" value="{{ reserva.valor if reserva else 0 }}">
+    </div>
+  </div>
+  <div class="pie-formulario">
+    <button class="boton" type="submit">Guardar</button>
+    <a class="boton secundario" href="{{ url_for('reservas_listar') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block titulo %}{{ accion }} cancha{% endblock %}
+{% block contenido %}
+<div class="encabezado"><div><h1>{{ accion }} cancha</h1><p>El codigo identifica la cancha y no se puede repetir.</p></div></div>
+<form class="formulario" method="post">
+  <div class="campos">
+    <div class="campo">
+      <label for="codigo">Codigo *</label>
+      <input id="codigo" name="codigo" required maxlength="10" value="{{ cancha.codigo if cancha else '' }}">
+    </div>
+    <div class="campo">
+      <label for="nombre">Nombre *</label>
+      <input id="nombre" name="nombre" required value="{{ cancha.nombre if cancha else '' }}">
+    </div>
+    <div class="campo">
+      <label for="deporte_id">Deporte *</label>
+      <select id="deporte_id" name="deporte_id" required>
+        {% for d in deportes %}
+        <option value="{{ d.id }}" {{ 'selected' if cancha and cancha.deporte_id|string == d.id|string }}>{{ d.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="superficie">Superficie</label>
+      <input id="superficie" name="superficie" value="{{ cancha.superficie or '' if cancha else '' }}">
+    </div>
+    <div class="campo">
+      <label for="tarifa_hora">Tarifa por hora</label>
+      <input type="number" step="1000" min="0" id="tarifa_hora" name="tarifa_hora"
+             value="{{ cancha.tarifa_hora if cancha else 0 }}">
+    </div>
+    <div class="campo">
+      <label for="estado">Estado</label>
+      <select id="estado" name="estado">
+        {% for e in ['disponible','mantenimiento','inactiva'] %}
+        <option value="{{ e }}" {{ 'selected' if cancha and cancha.estado == e }}>{{ e }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo casilla ancho">
+      <input type="checkbox" id="techada" name="techada" {{ 'checked' if cancha and cancha.techada }}>
+      <label for="techada">La cancha es techada</label>
+    </div>
+  </div>
+  <div class="pie-formulario">
+    <button class="boton" type="submit">Guardar</button>
+    <a class="boton secundario" href="{{ url_for('canchas_listar') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

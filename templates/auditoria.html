@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block titulo %}Auditoria{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div><h1>Auditoria y accesos</h1><p>Registro de cambios e intentos de ingreso. Solo visible para administradores.</p></div>
+</div>
+
+<h2 style="font-size:17px;margin-bottom:12px">Ultimos movimientos</h2>
+<div class="panel" style="margin-bottom:28px">
+  <table>
+    <thead><tr><th>Fecha</th><th>Usuario</th><th>Accion</th><th>Tabla</th><th>Registro</th><th>Detalle</th></tr></thead>
+    <tbody>
+      {% for m in movimientos %}
+      <tr>
+        <td>{{ m.fecha }}</td>
+        <td>{{ m.usuario or 'cuenta eliminada' }}</td>
+        <td><span class="etiqueta {{ 'alerta' if m.accion=='ELIMINAR' else 'neutra' }}">{{ m.accion }}</span></td>
+        <td>{{ m.tabla_afectada }}</td>
+        <td>{{ m.registro_id or '-' }}</td>
+        <td>{{ m.detalle or '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="vacio">Todavia no se ha registrado ningun cambio.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h2 style="font-size:17px;margin-bottom:12px">Intentos de ingreso</h2>
+<div class="panel">
+  <table>
+    <thead><tr><th>Fecha</th><th>Correo</th><th>Resultado</th><th>IP</th></tr></thead>
+    <tbody>
+      {% for i in intentos %}
+      <tr>
+        <td>{{ i.fecha }}</td>
+        <td>{{ i.correo }}</td>
+        <td><span class="etiqueta {{ 'ok' if i.exitoso else 'alerta' }}">{{ 'exitoso' if i.exitoso else 'fallido' }}</span></td>
+        <td>{{ i.ip_origen or '-' }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="vacio">Sin intentos registrados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

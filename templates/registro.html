@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta - Club Los Cedros</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body class="acceso">
+  <div class="caja-acceso">
+    <h1>Crear cuenta</h1>
+    <p class="sub">Las cuentas nuevas entran con perfil de operador.</p>
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% for categoria, texto in mensajes %}
+        <div class="mensaje {{ categoria }}">{{ texto }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="post">
+      <div class="campo">
+        <label for="nombre_completo">Nombre completo</label>
+        <input type="text" id="nombre_completo" name="nombre_completo" required autofocus>
+      </div>
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" required>
+      </div>
+      <div class="campo">
+        <label for="contrasena">Contrasena (minimo 8 caracteres)</label>
+        <input type="password" id="contrasena" name="contrasena" minlength="8" required>
+      </div>
+      <button type="submit" class="boton">Crear cuenta</button>
+    </form>
+    <p class="nota"><a href="{{ url_for('login') }}">Volver al ingreso</a></p>
+  </div>
+</body>
+</html>

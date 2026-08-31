@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block titulo %}Clases{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div><h1>Clases</h1><p>Programacion semanal del club.</p></div>
+  <a class="boton" href="{{ url_for('clases_crear') }}">Nueva clase</a>
+</div>
+<div class="panel">
+  <table>
+    <thead><tr><th>Clase</th><th>Deporte</th><th>Instructor</th><th>Cancha</th><th>Dia</th><th>Horario</th><th>Cupo</th><th>Valor</th><th></th></tr></thead>
+    <tbody>
+      {% for c in filas %}
+      <tr>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.deporte }}</td>
+        <td>{{ c.instructor }}</td>
+        <td>{{ c.cancha }}</td>
+        <td>{{ c.dia_semana }}</td>
+        <td>{{ c.hora_inicio }} a {{ c.hora_fin }}</td>
+        <td><span class="etiqueta {{ 'alerta' if c.inscritos >= c.cupo_maximo else 'ok' }}">{{ c.inscritos }}/{{ c.cupo_maximo }}</span></td>
+        <td>$ {{ '{:,.0f}'.format(c.valor) }}</td>
+        <td>
+          <div class="acciones">
+            <a class="boton mini secundario" href="{{ url_for('clases_editar', id=c.id) }}">Editar</a>
+            {% if rol == 'administrador' %}
+            <form method="post" action="{{ url_for('clases_eliminar', id=c.id) }}"
+                  onsubmit="return confirm('Eliminar la clase {{ c.nombre }}?')">
+              <button class="boton mini peligro" type="submit">Eliminar</button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="9" class="vacio">Aun no hay clases programadas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

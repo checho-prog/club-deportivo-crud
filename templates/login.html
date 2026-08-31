@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingresar - Club Los Cedros</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body class="acceso">
+  <div class="caja-acceso">
+    <h1>Club Deportivo Los Cedros</h1>
+    <p class="sub">Ingresa con tu cuenta para administrar el club.</p>
+
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% for categoria, texto in mensajes %}
+        <div class="mensaje {{ categoria }}">{{ texto }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="post">
+      <div class="campo">
+        <label for="correo">Correo</label>
+        <input type="email" id="correo" name="correo" required autofocus>
+      </div>
+      <div class="campo">
+        <label for="contrasena">Contrasena</label>
+        <input type="password" id="contrasena" name="contrasena" required>
+      </div>
+      <button type="submit" class="boton">Ingresar</button>
+    </form>
+
+    <p class="nota">Sin cuenta? <a href="{{ url_for('registro') }}">Crear una</a></p>
+    <div class="credenciales">
+      Cuentas de prueba<br>
+      admin@club.com / Admin123*<br>
+      recepcion@club.com / Operador123*
+    </div>
+  </div>
+</body>
+</html>

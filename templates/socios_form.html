@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block titulo %}{{ accion }} socio{% endblock %}
+{% block contenido %}
+<div class="encabezado"><div><h1>{{ accion }} socio</h1><p>Los campos con * son obligatorios.</p></div></div>
+
+<form class="formulario" method="post">
+  <div class="campos">
+    <div class="campo">
+      <label for="documento">Documento *</label>
+      <input id="documento" name="documento" required value="{{ socio.documento if socio else '' }}">
+    </div>
+    <div class="campo">
+      <label for="estado">Estado</label>
+      <select id="estado" name="estado">
+        {% for e in ['activo','inactivo','suspendido'] %}
+        <option value="{{ e }}" {{ 'selected' if socio and socio.estado == e }}>{{ e }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="nombres">Nombres *</label>
+      <input id="nombres" name="nombres" required value="{{ socio.nombres if socio else '' }}">
+    </div>
+    <div class="campo">
+      <label for="apellidos">Apellidos *</label>
+      <input id="apellidos" name="apellidos" required value="{{ socio.apellidos if socio else '' }}">
+    </div>
+    <div class="campo">
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" name="correo" value="{{ socio.correo or '' if socio else '' }}">
+    </div>
+    <div class="campo">
+      <label for="telefono">Telefono</label>
+      <input id="telefono" name="telefono" value="{{ socio.telefono or '' if socio else '' }}">
+    </div>
+    <div class="campo">
+      <label for="fecha_nacimiento">Fecha de nacimiento</label>
+      <input type="date" id="fecha_nacimiento" name="fecha_nacimiento"
+             value="{{ socio.fecha_nacimiento or '' if socio else '' }}">
+    </div>
+  </div>
+  <div class="pie-formulario">
+    <button class="boton" type="submit">Guardar</button>
+    <a class="boton secundario" href="{{ url_for('socios_listar') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

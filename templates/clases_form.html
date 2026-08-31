@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block titulo %}{{ accion }} clase{% endblock %}
+{% block contenido %}
+<div class="encabezado"><div><h1>{{ accion }} clase</h1><p>Elige instructor y cancha ya registrados en el sistema.</p></div></div>
+<form class="formulario" method="post">
+  <div class="campos">
+    <div class="campo ancho">
+      <label for="nombre">Nombre de la clase *</label>
+      <input id="nombre" name="nombre" required value="{{ clase.nombre if clase else '' }}">
+    </div>
+    <div class="campo">
+      <label for="deporte_id">Deporte *</label>
+      <select id="deporte_id" name="deporte_id" required>
+        {% for d in deportes %}
+        <option value="{{ d.id }}" {{ 'selected' if clase and clase.deporte_id|string == d.id|string }}>{{ d.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="instructor_id">Instructor *</label>
+      <select id="instructor_id" name="instructor_id" required>
+        {% for i in instructores %}
+        <option value="{{ i.id }}" {{ 'selected' if clase and clase.instructor_id|string == i.id|string }}>{{ i.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="cancha_id">Cancha *</label>
+      <select id="cancha_id" name="cancha_id" required>
+        {% for c in canchas %}
+        <option value="{{ c.id }}" {{ 'selected' if clase and clase.cancha_id|string == c.id|string }}>{{ c.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="dia_semana">Dia *</label>
+      <select id="dia_semana" name="dia_semana" required>
+        {% for d in dias %}
+        <option value="{{ d }}" {{ 'selected' if clase and clase.dia_semana == d }}>{{ d }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="hora_inicio">Hora de inicio *</label>
+      <input type="time" id="hora_inicio" name="hora_inicio" required value="{{ clase.hora_inicio if clase else '' }}">
+    </div>
+    <div class="campo">
+      <label for="hora_fin">Hora de fin *</label>
+      <input type="time" id="hora_fin" name="hora_fin" required value="{{ clase.hora_fin if clase else '' }}">
+    </div>
+    <div class="campo">
+      <label for="cupo_maximo">Cupo maximo</label>
+      <input type="number" min="1" id="cupo_maximo" name="cupo_maximo" value="{{ clase.cupo_maximo if clase else 10 }}">
+    </div>
+    <div class="campo">
+      <label for="valor">Valor</label>
+      <input type="number" step="1000" min="0" id="valor" name="valor" value="{{ clase.valor if clase else 0 }}">
+    </div>
+  </div>
+  <div class="pie-formulario">
+    <button class="boton" type="submit">Guardar</button>
+    <a class="boton secundario" href="{{ url_for('clases_listar') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}

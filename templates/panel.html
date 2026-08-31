@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Panel - Club Los Cedros{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div>
+    <h1>Hola, {{ usuario.split()[0] }}</h1>
+    <p>Resumen de la operacion del club.</p>
+  </div>
+  <a class="boton" href="{{ url_for('reservas_crear') }}">Registrar reserva</a>
+</div>
+
+<div class="tarjetas">
+  <div class="tarjeta"><div class="cifra">{{ resumen.socios }}</div><div class="rotulo">Socios activos</div></div>
+  <div class="tarjeta"><div class="cifra">{{ resumen.canchas }}</div><div class="rotulo">Canchas disponibles</div></div>
+  <div class="tarjeta"><div class="cifra">{{ resumen.clases }}</div><div class="rotulo">Clases programadas</div></div>
+  <div class="tarjeta"><div class="cifra">{{ resumen.reservas }}</div><div class="rotulo">Reservas confirmadas</div></div>
+</div>
+
+<h2 style="font-size:17px;margin-bottom:12px">Proximas reservas</h2>
+<div class="panel">
+  <table>
+    <thead><tr><th>Socio</th><th>Cancha</th><th>Deporte</th><th>Fecha</th><th>Horario</th></tr></thead>
+    <tbody>
+      {% for r in proximas %}
+      <tr>
+        <td>{{ r.socio }}</td>
+        <td>{{ r.cancha }}</td>
+        <td>{{ r.deporte }}</td>
+        <td>{{ r.fecha }}</td>
+        <td>{{ r.hora_inicio }} a {{ r.hora_fin }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="vacio">Todavia no hay reservas confirmadas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo %}Canchas{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div><h1>Canchas</h1><p>{{ filas|length }} escenario(s) registrados.</p></div>
+  <a class="boton" href="{{ url_for('canchas_crear') }}">Nueva cancha</a>
+</div>
+<div class="panel">
+  <table>
+    <thead><tr><th>Codigo</th><th>Nombre</th><th>Deporte</th><th>Superficie</th><th>Techada</th><th>Tarifa/hora</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+      {% for c in filas %}
+      <tr>
+        <td>{{ c.codigo }}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.deporte }}</td>
+        <td>{{ c.superficie or '-' }}</td>
+        <td>{{ 'Si' if c.techada else 'No' }}</td>
+        <td>$ {{ '{:,.0f}'.format(c.tarifa_hora) }}</td>
+        <td><span class="etiqueta {{ 'ok' if c.estado=='disponible' else ('alerta' if c.estado=='mantenimiento' else 'neutra') }}">{{ c.estado }}</span></td>
+        <td>
+          <div class="acciones">
+            <a class="boton mini secundario" href="{{ url_for('canchas_editar', id=c.id) }}">Editar</a>
+            {% if rol == 'administrador' %}
+            <form method="post" action="{{ url_for('canchas_eliminar', id=c.id) }}"
+                  onsubmit="return confirm('Eliminar la cancha {{ c.codigo }}?')">
+              <button class="boton mini peligro" type="submit">Eliminar</button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="vacio">Aun no hay canchas registradas.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

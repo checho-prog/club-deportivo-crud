@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Reservas{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div><h1>Reservas</h1><p>{{ filas|length }} reserva(s) en el sistema.</p></div>
+  <a class="boton" href="{{ url_for('reservas_crear') }}">Nueva reserva</a>
+</div>
+<div class="panel">
+  <table>
+    <thead><tr><th>Socio</th><th>Cancha</th><th>Fecha</th><th>Horario</th><th>Valor</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+      {% for r in filas %}
+      <tr>
+        <td>{{ r.socio }}</td>
+        <td>{{ r.cancha }}</td>
+        <td>{{ r.fecha }}</td>
+        <td>{{ r.hora_inicio }} a {{ r.hora_fin }}</td>
+        <td>$ {{ '{:,.0f}'.format(r.valor) }}</td>
+        <td><span class="etiqueta {{ 'ok' if r.estado=='confirmada' else ('alerta' if r.estado=='cancelada' else 'neutra') }}">{{ r.estado }}</span></td>
+        <td>
+          <div class="acciones">
+            <a class="boton mini secundario" href="{{ url_for('reservas_editar', id=r.id) }}">Editar</a>
+            {% if rol == 'administrador' %}
+            <form method="post" action="{{ url_for('reservas_eliminar', id=r.id) }}"
+                  onsubmit="return confirm('Eliminar esta reserva?')">
+              <button class="boton mini peligro" type="submit">Eliminar</button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="vacio">Aun no hay reservas. Registra la primera.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

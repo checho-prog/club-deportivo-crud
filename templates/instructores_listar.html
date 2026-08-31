@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo %}Instructores{% endblock %}
+{% block contenido %}
+<div class="encabezado">
+  <div><h1>Instructores</h1><p>{{ filas|length }} profesional(es) en el equipo.</p></div>
+  <a class="boton" href="{{ url_for('instructores_crear') }}">Nuevo instructor</a>
+</div>
+<div class="panel">
+  <table>
+    <thead><tr><th>Documento</th><th>Nombre</th><th>Deporte</th><th>Correo</th><th>Telefono</th><th>Tarifa/hora</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+      {% for i in filas %}
+      <tr>
+        <td>{{ i.documento }}</td>
+        <td>{{ i.nombres }} {{ i.apellidos }}</td>
+        <td>{{ i.deporte }}</td>
+        <td>{{ i.correo or '-' }}</td>
+        <td>{{ i.telefono or '-' }}</td>
+        <td>$ {{ '{:,.0f}'.format(i.tarifa_hora) }}</td>
+        <td><span class="etiqueta {{ 'ok' if i.activo else 'neutra' }}">{{ 'activo' if i.activo else 'inactivo' }}</span></td>
+        <td>
+          <div class="acciones">
+            <a class="boton mini secundario" href="{{ url_for('instructores_editar', id=i.id) }}">Editar</a>
+            {% if rol == 'administrador' %}
+            <form method="post" action="{{ url_for('instructores_eliminar', id=i.id) }}"
+                  onsubmit="return confirm('Eliminar a {{ i.nombres }} {{ i.apellidos }}?')">
+              <button class="boton mini peligro" type="submit">Eliminar</button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="vacio">Aun no hay instructores registrados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

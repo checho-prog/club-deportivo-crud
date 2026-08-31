@@ -1,0 +1,123 @@
+:root{
+  --verde:#14352a;
+  --verde-claro:#2e6b4f;
+  --arcilla:#b4552f;
+  --fondo:#f4f6f3;
+  --blanco:#ffffff;
+  --tinta:#1b2320;
+  --gris:#6d7a72;
+  --linea:#dde3dd;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Inter",system-ui,sans-serif;
+  background:var(--fondo);
+  color:var(--tinta);
+  font-size:15px;
+  line-height:1.55;
+}
+h1,h2,h3{font-family:"Sora",system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em}
+a{color:var(--verde-claro);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- Estructura ---------- */
+.layout{display:flex;min-height:100vh}
+.barra{
+  width:230px;flex-shrink:0;background:var(--verde);color:#e8f0ea;
+  padding:26px 18px;display:flex;flex-direction:column;gap:26px;
+}
+.marca{font-family:"Sora",sans-serif;font-size:19px;font-weight:600;line-height:1.2;color:#fff}
+.marca span{display:block;font-size:12px;font-weight:400;color:#9dbdaa;letter-spacing:.04em}
+.barra nav{display:flex;flex-direction:column;gap:2px}
+.barra nav a{
+  color:#cfe0d5;padding:9px 12px;border-radius:7px;font-size:14px;
+}
+.barra nav a:hover{background:rgba(255,255,255,.08);text-decoration:none}
+.barra nav a.activo{background:var(--verde-claro);color:#fff;font-weight:500}
+.sesion{margin-top:auto;font-size:13px;color:#9dbdaa;border-top:1px solid rgba(255,255,255,.14);padding-top:16px}
+.sesion strong{display:block;color:#fff;font-weight:500}
+.sesion a{color:#f0b79c}
+
+.contenido{flex:1;padding:32px 38px;max-width:1180px}
+.encabezado{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px;gap:16px;flex-wrap:wrap}
+.encabezado p{color:var(--gris);font-size:14px}
+
+/* ---------- Botones ---------- */
+.boton{
+  display:inline-block;background:var(--verde-claro);color:#fff;border:none;
+  padding:9px 16px;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;
+  font-family:inherit;
+}
+.boton:hover{background:#26583f;text-decoration:none}
+.boton.secundario{background:var(--blanco);color:var(--tinta);border:1px solid var(--linea)}
+.boton.secundario:hover{background:#eef1ee}
+.boton.peligro{background:var(--arcilla)}
+.boton.peligro:hover{background:#96431f}
+.boton.mini{padding:5px 10px;font-size:13px}
+
+/* ---------- Tarjetas y tablas ---------- */
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.tarjeta{background:var(--blanco);border:1px solid var(--linea);border-radius:10px;padding:18px}
+.tarjeta .cifra{font-family:"Sora",sans-serif;font-size:30px;font-weight:600;color:var(--verde)}
+.tarjeta .rotulo{font-size:13px;color:var(--gris)}
+
+.panel{background:var(--blanco);border:1px solid var(--linea);border-radius:10px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{
+  text-align:left;padding:11px 14px;background:#eef1ee;color:var(--gris);
+  font-weight:500;border-bottom:1px solid var(--linea);
+}
+td{padding:11px 14px;border-bottom:1px solid #eef1ee}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbfa}
+.acciones{display:flex;gap:6px;justify-content:flex-end}
+.vacio{padding:34px;text-align:center;color:var(--gris)}
+
+.etiqueta{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:500}
+.etiqueta.ok{background:#dcefe3;color:#1d6141}
+.etiqueta.alerta{background:#fbe6d8;color:#8f4520}
+.etiqueta.neutra{background:#e9ecea;color:#5d6b63}
+
+/* ---------- Formularios ---------- */
+.formulario{background:var(--blanco);border:1px solid var(--linea);border-radius:10px;padding:24px;max-width:720px}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.campo{display:flex;flex-direction:column;gap:5px}
+.campo.ancho{grid-column:1 / -1}
+label{font-size:13px;color:var(--gris);font-weight:500}
+input,select{
+  font-family:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--linea);
+  border-radius:7px;background:var(--blanco);color:var(--tinta);width:100%;
+}
+input:focus,select:focus{outline:2px solid var(--verde-claro);outline-offset:1px;border-color:transparent}
+.casilla{flex-direction:row;align-items:center;gap:8px}
+.casilla input{width:auto}
+.pie-formulario{display:flex;gap:10px;margin-top:22px}
+.buscador{display:flex;gap:8px;margin-bottom:16px}
+.buscador input{max-width:320px}
+
+/* ---------- Mensajes ---------- */
+.mensaje{padding:11px 15px;border-radius:8px;margin-bottom:16px;font-size:14px}
+.mensaje.exito{background:#dcefe3;color:#1d6141}
+.mensaje.error{background:#fbe1d8;color:#8f3a20}
+.mensaje.aviso{background:#fdf3d8;color:#7a5a12}
+
+/* ---------- Acceso (login / registro) ---------- */
+.acceso{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(150deg,#14352a 0%,#2e6b4f 100%);padding:20px;
+}
+.caja-acceso{background:var(--blanco);border-radius:14px;padding:34px;width:100%;max-width:390px}
+.caja-acceso h1{font-size:23px;margin-bottom:4px}
+.caja-acceso .sub{color:var(--gris);font-size:14px;margin-bottom:22px}
+.caja-acceso .campo{margin-bottom:14px}
+.caja-acceso .boton{width:100%;padding:11px}
+.nota{margin-top:18px;font-size:13px;color:var(--gris);text-align:center}
+.credenciales{margin-top:16px;font-size:12.5px;color:var(--gris);background:#f4f6f3;border-radius:8px;padding:12px}
+
+@media (max-width:760px){
+  .layout{flex-direction:column}
+  .barra{width:100%;flex-direction:column}
+  .contenido{padding:22px 18px}
+  .campos{grid-template-columns:1fr}
+  table{font-size:13px}
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Club Deportivo Los Cedros{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+<div class="layout">
+  <aside class="barra">
+    <div class="marca">Los Cedros<span>Club deportivo</span></div>
+    <nav>
+      <a href="{{ url_for('panel') }}" class="{{ 'activo' if request.endpoint == 'panel' }}">Panel</a>
+      <a href="{{ url_for('socios_listar') }}" class="{{ 'activo' if request.endpoint.startswith('socios') }}">Socios</a>
+      <a href="{{ url_for('canchas_listar') }}" class="{{ 'activo' if request.endpoint.startswith('canchas') }}">Canchas</a>
+      <a href="{{ url_for('instructores_listar') }}" class="{{ 'activo' if request.endpoint.startswith('instructores') }}">Instructores</a>
+      <a href="{{ url_for('clases_listar') }}" class="{{ 'activo' if request.endpoint.startswith('clases') }}">Clases</a>
+      <a href="{{ url_for('reservas_listar') }}" class="{{ 'activo' if request.endpoint.startswith('reservas') }}">Reservas</a>
+      {% if rol == 'administrador' %}
+      <a href="{{ url_for('auditoria') }}" class="{{ 'activo' if request.endpoint == 'auditoria' }}">Auditoria</a>
+      {% endif %}
+    </nav>
+    <div class="sesion">
+      <strong>{{ usuario }}</strong>
+      {{ rol }}<br>
+      <a href="{{ url_for('logout') }}">Cerrar sesion</a>
+    </div>
+  </aside>
+
+  <main class="contenido">
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% for categoria, texto in mensajes %}
+        <div class="mensaje {{ categoria }}">{{ texto }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block contenido %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>
